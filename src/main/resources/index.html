@@ -1,0 +1,27 @@
+<html>
+<body>
+<div id="avg"></div>
+<div id="main"></div>
+<script language="JavaScript">
+  const sse = new EventSource("/sse")
+  const main = document.getElementById("main")
+  const avg = document.getElementById("avg")
+
+  sse.addEventListener("update", (evt) => {
+    const data = JSON.parse(evt.data)
+    let div = document.getElementById(data.id)
+    if (div === null) {
+      div = document.createElement("div")
+      div.setAttribute("id", data.id)
+      main.appendChild(div)
+    }
+    div.innerHTML = `${data.id}: ${data.temp.toFixed(2)}`
+  })
+
+  sse.addEventListener("average", (evt) => {
+    const data = JSON.parse(evt.data)
+    avg.innerText = `Average = ${data.average.toFixed(2)}`
+  })
+</script>
+</body>
+</html>

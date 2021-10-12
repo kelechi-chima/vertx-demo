@@ -1,0 +1,6 @@
+FROM postgres:11-alpine
+ENV POSTGRES_DB steps
+ENV POSTGRES_USER postgres
+ENV POSTGRES_PASSWORD vertxinaction
+EXPOSE 5432
+COPY steps.sql /docker-entrypoint-initdb.d/
